@@ -30,6 +30,7 @@
                         <h2 class="footer-wid-title">Categorias</h2>
                         <ul>
                             <?php require $this->checkTemplate("categories-menu");?>
+                        </ul>                        
                     </div>
                 </div>
                 
@@ -88,6 +89,6 @@
     
     <!-- Slider -->
     <script type="text/javascript" src="/res/site/js/bxslider.min.js"></script>
-	<script type="text/javascript" src="/res/site/js/script.slider.js"></script>
+    <script type="text/javascript" src="/res/site/js/script.slider.js"></script>
   </body>
 </html>
