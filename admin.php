@@ -7,9 +7,9 @@ $app->get('/admin', function() {
     
 	User::verifyLogin(); //VERIFICA SE A PESSOA É ADMIN PELA SESSÃO
 
-	$page = new PageAdmin();
+	$page = new PageAdmin(); 
 
-	$page->setTpl("index");
+	$page->setTpl("index"); //RENDERIZA A PAGINA
 
 });
 
