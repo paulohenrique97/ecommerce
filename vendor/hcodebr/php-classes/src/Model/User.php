@@ -13,22 +13,37 @@ class User extends Model {
     const ERROR = "UserError";
     const ERROR_REGISTER = "UserErrorRegister";
     const SUCCESS = "UserSucesss";
+    
 
-        public static function getFromSession(){
+    public static function getFromSession(){ //PEGA TODAS AS VARIAVEIS DA SESSÃO
 
         $user =  new User();
 
         if (isset($_SESSION[User::SESSION]) && (int)$_SESSION[User::SESSION] > 0){            
 
             $user->setData($_SESSION[User::SESSION]);
-            
+
         }
 
         return $user;
 
     }
+    
+    
+    public static function verifyLogin($inadmin = true)
+    {
+        if (!User::checkLogin($inadmin)) { //CHAMA METODO QUE VAI VERIFICAR SE A VARIAVEL ADMIN ESTÁ TRUE
+            if ($inadmin) {
+                header("Location: /admin/login"); //SE A PESSOA TIVER ADMIN MAS ESTÁ DESLOGADA, REDIRECIONA PARA O LOGIN DE ADMIN
+            } else {
+                header("Location: /login"); //SE A PESSOA NÃO FOR ADMIN, REDIRECIONA PARA O LOGIN COMUM
+            }
+            exit; //SE ELE FOR ADMIN LOGADO, SÓ SAI DO METODO E NÃO REDIRECIONA, DEIXANDO A PESSOA ENTRAR NA PAGINA
+        }
+    }
+    //ACHO QUE DARIA PRA FAZER ALGO PARECIDO, SÓ QUE COM IP, MAS NÃO SEI SE O POWER BI DEIXARIA EDITAR ASSIM O CÓDIGO DA PAGINA
 
-    public static function checkLogin($inadmin = true)
+    public static function checkLogin($inadmin = true) //VERIFICA A VARIAVEL ADMIN NA SESSÃO
     {
         if (
             !isset($_SESSION[User::SESSION])
@@ -70,18 +85,6 @@ class User extends Model {
             return $user;
         } else {
             throw new \Exception("Usuário inexistente ou senha inválida.");
-        }
-    }
-
-    public static function verifyLogin($inadmin = true)
-    {
-        if (!User::checkLogin($inadmin)) {
-            if ($inadmin) {
-                header("Location: /admin/login");
-            } else {
-                header("Location: /login");
-            }
-            exit;
         }
     }
 
